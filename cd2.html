@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CD 2 - Zara Home & Bershka</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
+
+        @keyframes fadeOut {
+            0% { opacity: 1; transform: translateY(0); }
+            80% { opacity: 1; transform: translateY(0); }
+            100% { opacity: 0; transform: translateY(-10px); }
+        }
+        .toast {
+            animation: fadeOut 2s forwards;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen p-3 sm:p-6">
+
+<div class="max-w-7xl mx-auto">
+
+    <!-- Botão Voltar -->
+    <div class="mb-4">
+        <a href="index.html" class="inline-flex items-center text-sm text-gray-500 hover:text-blue-600 font-medium transition-colors">
+            <i class="fas fa-arrow-left mr-2"></i> Voltar ao Menu Principal
+        </a>
+    </div>
+
+    <!-- Header -->
+    <header class="mb-6 sm:mb-8 flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+        <div class="flex items-center gap-4 w-full lg:w-auto">
+            <div class="bg-blue-600 p-3 rounded-lg flex-shrink-0">
+                <i class="fas fa-boxes text-white text-xl sm:text-2xl"></i>
+            </div>
+            <div>
+                <h1 class="text-xl sm:text-2xl font-bold tracking-tight text-gray-900">CD 2 - Home & Bershka</h1>
+                <p class="text-xs sm:text-sm text-gray-500 mt-1">Gestão de IPs das Estações de Packing e Devolução</p>
+            </div>
+        </div>
+
+        <div class="relative w-full sm:w-72 md:w-96 flex-shrink-0">
+            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                <i class="fas fa-search text-gray-400"></i>
+            </div>
+            <input type="text" id="searchInput" class="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-lg leading-5 bg-gray-50 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:bg-white transition duration-150 ease-in-out text-sm" placeholder="Buscar por estação ou equipamento...">
+        </div>
+    </header>
+
+    <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-2"></div>
+
+    <div id="stationsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-4 sm:gap-6">
+        <!-- Cards gerados via JS -->
+    </div>
+</div>
+
+<script>
+    const xmlData = `<?xml version="1.0" encoding="UTF-8"?>
+        <stations>
+            <!-- Equipamentos Gerais do Setor -->
+            <station id="Equipamentos Gerais" type="other">
+                <incidencias>10.86.80.195</incidencias>
+                <pick_pack>10.86.81.25</pick_pack>
+                <normal>Pendente</normal>
+            </station>
+
+            <!-- Mesas de Operação -->
+            <station id="EZBRSAOTGT301">
+                <courier>10.86.80.162</courier>
+                <price>10.86.81.148</price>
+                <rfid>10.86.80.160</rfid>
+            </station>
+            <station id="EZBRSAOTGT302">
+                <courier>10.86.80.142</courier>
+                <price>10.86.81.149</price>
+                <rfid>10.86.80.140</rfid>
+            </station>
+            <station id="EZBRSAOTGT303">
+                <courier>10.86.80.146</courier>
+                <price>10.86.81.150</price>
+                <rfid>10.86.80.144</rfid>
+            </station>
+            <station id="EZBRSAOTGT304">
+                <courier>10.86.80.150</courier>
+                <price>10.86.81.151</price>
+                <rfid>10.86.80.148</rfid>
+            </station>
+            <station id="EZBRSAOTGT305">
+                <courier>10.86.80.154</courier>
+                <price>10.86.81.152</price>
+                <rfid>10.86.80.152</rfid>
+            </station>
+            <station id="EZBRSAOTGT306">
+                <courier>10.86.80.158</courier>
+                <price>10.86.81.153</price>
+                <rfid>10.86.80.156</rfid>
+            </station>
+            <station id="EZBRSAOTGT307">
+                <courier>10.86.80.166</courier>
+                <price>10.86.81.154</price>
+                <rfid>10.86.80.164</rfid>
+            </station>
+            <station id="EZBRSAOTGT308">
+                <courier>10.86.80.170</courier>
+                <price>10.86.81.155</price>
+                <rfid>10.86.80.168</rfid>
+            </station>
+            <station id="EZBRSAOTGT309">
+                <courier>10.86.80.174</courier>
+                <price>10.86.81.223</price>
+                <rfid>10.86.80.172</rfid>
+            </station>
+            <station id="EZBRSAOTGT310">
+                <courier>10.86.80.178</courier>
+                <price>10.86.81.224</price>
+                <rfid>10.86.80.176</rfid>
+            </station>
+            <station id="EZBRSAOTGT311">
+                <courier>10.86.80.182</courier>
+                <price>10.86.81.225</price>
+                <rfid>10.86.80.180</rfid>
+            </station>
+            <station id="EZBRSAOTGT312">
+                <courier>10.86.80.186</courier>
+                <price>10.86.81.226</price>
+                <rfid>10.86.80.184</rfid>
+            </station>
+            <station id="EZBRSAOTGT313">
+                <courier>10.86.81.13</courier>
+                <price>10.86.81.227</price>
+                <rfid>10.86.81.11</rfid>
+            </station>
+            <station id="EZBRSAOTGT314">
+                <courier>10.86.81.17</courier>
+                <price>10.86.81.228</price>
+                <rfid>10.86.81.15</rfid>
+            </station>
+            <station id="EZBRSAOTGT315">
+                <rfid>Local</rfid>
+            </station>
+            <station id="EZBRSAOTGT316">
+                <rfid>Local</rfid>
+            </station>
+        </stations>`;
+
+    let allStations = [];
+
+    function initData() {
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, "text/xml");
+        const stationsNodes = xmlDoc.querySelectorAll("station");
+
+        allStations = Array.from(stationsNodes).map(station => {
+            return {
+                id: station.getAttribute('id'),
+                type: station.getAttribute('type') || 'station',
+                courier: station.querySelector('courier')?.textContent,
+                price: station.querySelector('price')?.textContent,
+                rfid: station.querySelector('rfid')?.textContent,
+                incidencias: station.querySelector('incidencias')?.textContent,
+                pick_pack: station.querySelector('pick_pack')?.textContent,
+                normal: station.querySelector('normal')?.textContent
+            };
+        });
+
+        renderCards(allStations);
+    }
+
+    function createIpRow(iconClass, label, ip, subtitle = '') {
+        // Oculta automaticamente se o IP for nulo, vazio ou "Pendente"
+        if (!ip || ip.trim().toLowerCase() === 'pendente') return '';
+
+        const subtitleHtml = subtitle ? `<span class="text-[10px] text-gray-400 block tracking-wide uppercase mt-0.5 leading-none">${subtitle}</span>` : '';
+        const isLocal = ip.toLowerCase() === 'local';
+
+        const badgeClass = isLocal
+            ? 'bg-yellow-50 text-yellow-700 border-yellow-200'
+            : 'bg-white text-gray-700 border-gray-200 font-mono shadow-sm';
+
+        const copyButton = !isLocal ? `
+                <button onclick="copyToClipboard('${ip}', '${label}')" class="text-gray-400 hover:text-blue-600 p-1.5 rounded-md hover:bg-blue-50 transition-colors flex-shrink-0" title="Copiar IP">
+                    <i class="far fa-copy"></i>
+                </button>
+            ` : '';
+
+        return `
+                <div class="flex items-center justify-between p-2.5 rounded-lg transition-colors border-b border-gray-100 hover:bg-gray-50 last:border-b-0 group my-0.5 gap-2">
+                    <div class="flex items-start text-gray-600 min-w-0 flex-1">
+                        <div class="w-8 h-8 rounded bg-gray-100 flex items-center justify-center mr-3 transition-colors flex-shrink-0 mt-0.5">
+                            <i class="${iconClass} text-gray-400 group-hover:text-blue-600"></i>
+                        </div>
+                        <div class="flex flex-col justify-center min-w-0 pt-1">
+                            <span class="text-sm font-medium leading-tight truncate block">${label}</span>
+                            ${subtitleHtml}
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+                        <span class="text-xs sm:text-sm px-1.5 sm:px-2 py-1 rounded select-all border ${badgeClass}">${ip}</span>
+                        ${copyButton}
+                    </div>
+                </div>
+            `;
+    }
+
+    function renderCards(stations) {
+        const container = document.getElementById('stationsContainer');
+        container.innerHTML = '';
+
+        if (stations.length === 0) {
+            container.innerHTML = `
+                    <div class="col-span-full text-center py-12 bg-white rounded-xl border border-gray-200">
+                        <i class="fas fa-search text-4xl text-gray-300 mb-3"></i>
+                        <p class="text-gray-500 text-lg">Nenhum resultado encontrado.</p>
+                    </div>
+                `;
+            return;
+        }
+
+        stations.forEach(station => {
+            const card = document.createElement('div');
+            card.className = "bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 flex flex-col";
+
+            // Tratamento especial para o Card de Equipamentos Gerais
+            if (station.type === 'other') {
+                card.innerHTML = `
+                        <div class="bg-slate-800 px-4 sm:px-5 py-3 border-b border-slate-900 flex justify-between items-center">
+                            <h3 class="text-white font-bold text-base sm:text-lg flex items-center tracking-wide leading-tight">
+                                <i class="fas fa-server mr-2 sm:mr-3 text-blue-400"></i>
+                                ${station.id}
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-slate-400 font-bold tracking-wider">ATIVO</span>
+                                <span class="flex h-3 w-3 relative">
+                                    <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                                    <span class="relative inline-flex rounded-full h-3 w-3 bg-blue-500"></span>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-3 sm:p-4 flex flex-col gap-0.5 sm:gap-1 flex-grow">
+                            ${createIpRow('fas fa-exclamation-triangle', 'Imp. Incidências', station.incidencias, 'Zebra/Ricoh')}
+                            ${createIpRow('fas fa-box-open', 'Imp. Pick & Pack', station.pick_pack, 'Zebra/Ricoh')}
+                            ${createIpRow('fas fa-print', 'Imp. Normal', station.normal, 'Padrão Rede')}
+                        </div>
+                        <div class="bg-slate-50 px-4 py-2 border-t border-slate-100 flex justify-end items-center">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded border border-slate-200 text-slate-600 text-xs font-bold tracking-widest uppercase">
+                                <i class="fas fa-layer-group mr-1.5 opacity-70"></i>
+                                Periféricos de Apoio
+                            </span>
+                        </div>
+                    `;
+            }
+            // Tratamento para as Estações de Trabalho Padrão (TGT)
+            else {
+                const isDev = station.id.endsWith('315') || station.id.endsWith('316');
+                const statusText = isDev ? 'DEV' : 'PAC';
+
+                const statusBadge = isDev
+                    ? `<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-yellow-400 opacity-75"></span>
+                           <span class="relative inline-flex rounded-full h-3 w-3 bg-yellow-500"></span>`
+                    : `<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
+                           <span class="relative inline-flex rounded-full h-3 w-3 bg-green-500"></span>`;
+
+                const stationNumber = parseInt(station.id.slice(-3));
+                const isZaraHome = stationNumber % 2 !== 0;
+                const storeName = isZaraHome ? 'Zara Home' : 'Bershka';
+
+                const storeColorClass = isZaraHome
+                    ? 'bg-amber-50 text-amber-700 border-amber-200'
+                    : 'bg-rose-50 text-rose-700 border-rose-200';
+
+                let courierModel = 'Zebra ZD421';
+                let priceModel = 'Zebra ZD421';
+
+                const priceZD621Stations = ['EZBRSAOTGT301', 'EZBRSAOTGT305', 'EZBRSAOTGT307', 'EZBRSAOTGT309', 'EZBRSAOTGT311'];
+                if (priceZD621Stations.includes(station.id)) {
+                    priceModel = 'Zebra ZD621';
+                }
+
+                if (station.id === 'EZBRSAOTGT313') {
+                    courierModel = 'Zebra ZD621';
+                    priceModel = 'Zebra ZD421';
+                }
+
+                let contentHtml = '';
+                if (isDev) {
+                    contentHtml = createIpRow('fas fa-wifi', 'RFID', station.rfid, 'IDX4000');
+                } else {
+                    contentHtml = `
+                            ${createIpRow('fas fa-truck-fast', 'Courier', station.courier, courierModel)}
+                            ${createIpRow('fas fa-tag', 'Price', station.price, priceModel)}
+                            ${createIpRow('fas fa-wifi', 'RFID', station.rfid, 'IDX4000')}
+                        `;
+                }
+
+                card.innerHTML = `
+                        <div class="bg-gray-800 px-4 sm:px-5 py-3 border-b border-gray-900 flex justify-between items-center">
+                            <h3 class="text-white font-bold text-base sm:text-lg flex items-center tracking-wide leading-tight">
+                                <i class="fas fa-desktop mr-2 sm:mr-3 text-blue-400"></i>
+                                ${station.id}
+                            </h3>
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs text-gray-400 font-bold tracking-wider">${statusText}</span>
+                                <span class="flex h-3 w-3 relative">
+                                    ${statusBadge}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-3 sm:p-4 flex flex-col gap-0.5 sm:gap-1 flex-grow">
+                            ${contentHtml}
+                        </div>
+                        <div class="bg-gray-50 px-4 py-2 border-t border-gray-100 flex justify-end items-center">
+                            <span class="inline-flex items-center px-2.5 py-1 rounded border ${storeColorClass} text-xs font-bold tracking-widest uppercase">
+                                <i class="${isZaraHome ? 'fas fa-home' : 'fas fa-store'} mr-1.5 opacity-70"></i>
+                                ${storeName}
+                            </span>
+                        </div>
+                    `;
+            }
+
+            container.appendChild(card);
+        });
+    }
+
+    function copyToClipboard(text, label) {
+        const tempInput = document.createElement("input");
+        tempInput.value = text;
+        document.body.appendChild(tempInput);
+        tempInput.select();
+        document.execCommand("copy");
+        document.body.removeChild(tempInput);
+
+        showToast(`IP copiado com sucesso! (${text})`);
+    }
+
+    function showToast(message) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = 'toast bg-gray-900 text-white px-4 py-3 rounded-lg shadow-lg flex items-center gap-3 text-sm border-l-4 border-blue-500';
+        toast.innerHTML = `
+                <i class="fas fa-check-circle text-blue-400 text-lg"></i>
+                <span>${message}</span>
+            `;
+
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            if (container.contains(toast)) {
+                container.removeChild(toast);
+            }
+        }, 2000);
+    }
+
+    document.getElementById('searchInput').addEventListener('input', (e) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredStations = allStations.filter(station =>
+            station.id.toLowerCase().includes(searchTerm)
+        );
+        renderCards(filteredStations);
+    });
+
+    document.addEventListener('DOMContentLoaded', initData);
+</script>
+</body>
+</html>
