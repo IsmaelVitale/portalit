@@ -19,23 +19,33 @@
 
 <!-- Cabeçalho Principal -->
 <header class="bg-slate-900 text-white shadow-md sticky top-0 z-10">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col sm:flex-row justify-between items-center gap-4">
-        <div class="flex items-center gap-3">
-            <i class="fa-solid fa-server text-2xl text-blue-400"></i>
-            <h1 class="text-xl font-bold tracking-tight">TI Logística <span class="text-slate-400 font-normal">| Downloads</span></h1>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-col gap-4">
+
+        <!-- Botão Voltar -->
+        <div class="w-full">
+            <a href="index.html" class="inline-flex items-center text-sm text-slate-400 hover:text-white font-medium transition-colors">
+                <i class="fa-solid fa-arrow-left mr-2"></i> Voltar ao Menu Principal
+            </a>
         </div>
 
-        <!-- Barra de Pesquisa -->
-        <div class="relative w-full sm:w-96">
-            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+        <div class="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div class="flex items-center gap-3 w-full sm:w-auto">
+                <i class="fa-solid fa-server text-2xl text-blue-400"></i>
+                <h1 class="text-xl font-bold tracking-tight">TI Logística <span class="text-slate-400 font-normal">| Downloads</span></h1>
             </div>
-            <input
-                    type="text"
-                    id="searchInput"
-                    class="block w-full pl-10 pr-3 py-2 border border-slate-700 rounded-lg leading-5 bg-slate-800 text-slate-300 placeholder-slate-400 focus:outline-none focus:bg-white focus:text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 sm:text-sm transition-colors duration-200"
-                    placeholder="Pesquisar por nome ou pasta..."
-            >
+
+            <!-- Barra de Pesquisa -->
+            <div class="relative w-full sm:w-96">
+                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i class="fa-solid fa-magnifying-glass text-slate-400"></i>
+                </div>
+                <input
+                        type="text"
+                        id="searchInput"
+                        class="block w-full pl-10 pr-3 py-2 border border-slate-700 rounded-lg leading-5 bg-slate-800 text-slate-300 placeholder-slate-400 focus:outline-none focus:bg-white focus:text-slate-900 focus:border-blue-500 focus:ring-2 focus:ring-blue-500 sm:text-sm transition-colors duration-200"
+                        placeholder="Pesquisar por nome ou pasta..."
+                >
+            </div>
         </div>
     </div>
 </header>
@@ -45,7 +55,7 @@
 
     <!-- Barra Lateral: Categorias (Pastas) -->
     <aside class="w-full md:w-64 flex-shrink-0">
-        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 sticky top-24">
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5 sticky top-36">
             <h2 class="text-sm font-semibold text-slate-500 uppercase tracking-wider mb-4 flex items-center gap-2">
                 <i class="fa-regular fa-folder-open"></i> Pastas
             </h2>
@@ -80,22 +90,11 @@
 
 <script>
     // 1. Array de Arquivos (Hospedagem Estática)
-    // Certifique-se de que a estrutura de pastas no Cloudflare seja exatamente como os nomes definidos aqui.
-    // Exemplo: crie uma pasta "ECOM" na raiz do seu projeto e coloque o "ITXRFIDController.zip" lá dentro.
     const filesData = [
-        {
-            id: 1,
-            name: "ITXRFIDController.zip",
-            folder: "ECOM",
-            size: "14.2 MB",
-            date: "25 Out 2025",
-            type: "zip"
-        },
+        { id: 1, name: "ITXRFIDController.zip", folder: "ECOM", size: "14.2 MB", date: "25 Out 2025", type: "zip" },
         { id: 2, name: "Drive RNDIS.rar", folder: "ECOM", size: "0.5 MB", date: "25 Mar 2026", type: "rar" },
         { id: 3, name: "ASLO - ERA config manual v1.2 ptbr.pdf", folder: "ECOM", size: "2 MB", date: "25 Mar 2026", type: "pdf" },
         { id: 4, name: "BBProfile.json", folder: "PDA", size: "33 KB", date: "31 Mar 2026", type: "json" }
-        // Você pode adicionar mais arquivos aqui facilmente:
-        // { id: 2, name: "Manual_Coletores.pdf", folder: "Manuais", size: "2.5 MB", date: "26 Out 2025", type: "pdf" }
     ];
 
     // 2. Estado da Aplicação
@@ -111,20 +110,16 @@
     const noResults = document.getElementById('noResults');
 
     // 4. Funções de Renderização e Lógica
-
-    // Inicializa a aplicação
     function initApp() {
         renderCategories();
         filterAndRenderFiles();
     }
 
-    // Pega as pastas únicas baseadas no array de arquivos
     function getUniqueFolders() {
         const folders = filesData.map(file => file.folder);
         return ['Todos', ...new Set(folders)].sort();
     }
 
-    // Renderiza o menu lateral de categorias
     function renderCategories() {
         const folders = getUniqueFolders();
         categoryList.innerHTML = '';
@@ -133,16 +128,13 @@
             const li = document.createElement('li');
             const isActive = folder === currentFilter;
 
-            // Estilização dinâmica da categoria ativa
             li.className = `
                     cursor-pointer px-3 py-2 rounded-lg text-sm font-medium transition-colors flex justify-between items-center
                     ${isActive ? 'bg-blue-50 text-blue-700' : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'}
                 `;
 
-            // Ícone condicional (Todos vs Pasta específica)
             const iconClass = folder === 'Todos' ? 'fa-solid fa-layer-group' : 'fa-solid fa-folder';
 
-            // Conta quantos arquivos tem na pasta
             const count = folder === 'Todos'
                 ? filesData.length
                 : filesData.filter(f => f.folder === folder).length;
@@ -157,7 +149,7 @@
 
             li.addEventListener('click', () => {
                 currentFilter = folder;
-                renderCategories(); // Re-renderiza para atualizar o visual "ativo"
+                renderCategories();
                 filterAndRenderFiles();
             });
 
@@ -165,21 +157,19 @@
         });
     }
 
-    // Define qual ícone usar baseado na extensão do arquivo
     function getFileIcon(type) {
         switch(type.toLowerCase()) {
-            case 'zip': return '<i class="fa-regular fa-file-zipper text-4xl text-amber-500"></i>';
+            case 'zip':
+            case 'rar': return '<i class="fa-regular fa-file-zipper text-4xl text-amber-500"></i>';
             case 'pdf': return '<i class="fa-regular fa-file-pdf text-4xl text-red-500"></i>';
             case 'exe': return '<i class="fa-brands fa-windows text-4xl text-blue-500"></i>';
             default: return '<i class="fa-regular fa-file text-4xl text-slate-400"></i>';
         }
     }
 
-    // Filtra os arquivos por pesquisa e por pasta, depois renderiza no grid
     function filterAndRenderFiles() {
         let filtered = filesData;
 
-        // Aplica filtro de categoria
         if (currentFilter !== 'Todos') {
             filtered = filtered.filter(f => f.folder === currentFilter);
             currentCategoryTitle.textContent = `Pasta: ${currentFilter}`;
@@ -187,7 +177,6 @@
             currentCategoryTitle.textContent = 'Todos os Arquivos';
         }
 
-        // Aplica filtro de pesquisa
         if (searchQuery.trim() !== '') {
             const query = searchQuery.toLowerCase();
             filtered = filtered.filter(f =>
@@ -196,10 +185,8 @@
             );
         }
 
-        // Atualiza contador
         fileCount.textContent = `${filtered.length} arquivo${filtered.length !== 1 ? 's' : ''}`;
 
-        // Controla visibilidade da mensagem de "nenhum resultado"
         if (filtered.length === 0) {
             filesGrid.innerHTML = '';
             filesGrid.classList.add('hidden');
@@ -212,13 +199,11 @@
             noResults.classList.remove('flex');
         }
 
-        // Renderiza os cards
         filesGrid.innerHTML = '';
         filtered.forEach(file => {
             const card = document.createElement('div');
             card.className = "bg-white p-5 rounded-xl border border-slate-200 shadow-sm hover:shadow-md transition-shadow group flex flex-col justify-between h-full";
 
-            // O caminho dinâmico para o arquivo é montado aqui: ./pasta/arquivo.extensao
             const filePath = `./${file.folder}/${file.name}`;
 
             card.innerHTML = `
@@ -245,15 +230,12 @@
         });
     }
 
-    // 5. Listeners de Eventos
     searchInput.addEventListener('input', (e) => {
         searchQuery = e.target.value;
         filterAndRenderFiles();
     });
 
-    // Inicializa o sistema ao carregar a página
     window.addEventListener('DOMContentLoaded', initApp);
-
 </script>
 </body>
 </html>
