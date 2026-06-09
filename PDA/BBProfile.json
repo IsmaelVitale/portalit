@@ -131,7 +131,7 @@
 	{"type":2, "name":"Prefix", "value":"", "optionInt1":500, "optionInt2":4, "optionInt3":0, "optionInt4":0, "optionStr1":"", "optionStr2":"0^1^2^3"},
 	{"type":2, "name":"Suffix", "value":"", "optionInt1":501, "optionInt2":4, "optionInt3":1, "optionInt4":0, "optionStr1":"", "optionStr2":"0^1^2^3"},
 	{"type":2, "name":"Sound Mode", "value":"On", "optionInt1":502, "optionInt2":1, "optionInt3":2, "optionInt4":0, "optionStr1":"Off^On^Vibrate^Sound&Vibrate", "optionStr2":"0^1^2^3"},
-	{"type":2, "name":"Trigger Mode", "value":"Edge", "optionInt1":503, "optionInt2":1, "optionInt3":3, "optionInt4":0, "optionStr1":"Level^Pulse^Edge^Autostand^Streaming", "optionStr2":"0^1^2^3"},
+	{"type":2, "name":"Trigger Mode", "value":"Level", "optionInt1":503, "optionInt2":1, "optionInt3":3, "optionInt4":0, "optionStr1":"Level^Pulse^Edge^Autostand^Streaming", "optionStr2":"0^1^2^3"},
 	{"type":2, "name":"Aimer Mode", "value":"On", "optionInt1":504, "optionInt2":1, "optionInt3":3, "optionInt4":0, "optionStr1":"On^Off", "optionStr2":"0^3"},
 	{"type":2, "name":"Illumination Mode", "value":"On", "optionInt1":505, "optionInt2":1, "optionInt3":3, "optionInt4":0, "optionStr1":"On^Off", "optionStr2":"0^3"},
 	{"type":2, "name":"Decode Timeout", "value":"1000", "optionInt1":506, "optionInt2":7, "optionInt3":3, "optionInt4":2, "optionStr1":"", "optionStr2":"0^1^2^3"},
