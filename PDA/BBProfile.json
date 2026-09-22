@@ -41,7 +41,7 @@
 	{"type":2, "name":"Interleaved 2 of 5", "value":"1", "optionInt1":11, "optionInt2":2, "optionInt3":17, "optionInt4":0, "optionStr1":"", "optionStr2":"0^1^2^3"},
 	{"type":2, "name":"Interleaved 2 of 5 Length Min", "value":"3", "optionInt1":57, "optionInt2":0, "optionInt3":17, "optionInt4":1, "optionStr1":"", "optionStr2":"0^3"},
 	{"type":2, "name":"Interleaved 2 of 5 Length Max", "value":"30", "optionInt1":58, "optionInt2":0, "optionInt3":17, "optionInt4":2, "optionStr1":"", "optionStr2":"0^3"},
-	{"type":2, "name":"Interleaved 2 of 5 Check Digit", "value":"1", "optionInt1":59, "optionInt2":2, "optionInt3":17, "optionInt4":3, "optionStr1":"", "optionStr2":"0^3"},
+	{"type":2, "name":"Interleaved 2 of 5 Check Digit", "value":"0", "optionInt1":59, "optionInt2":2, "optionInt3":17, "optionInt4":3, "optionStr1":"", "optionStr2":"0^3"},
 	{"type":2, "name":"Interleaved 2 of 5 Transmit Check Digit", "value":"0", "optionInt1":60, "optionInt2":2, "optionInt3":17, "optionInt4":4, "optionStr1":"", "optionStr2":"0^3"},
 	{"type":2, "name":"Convert Interleaved 2 of 5 to EAN13", "value":"0", "optionInt1":99, "optionInt2":2, "optionInt3":18, "optionInt4":0, "optionStr1":"", "optionStr2":"0^3"},
 	{"type":2, "name":"CODABAR(NW-7)", "value":"1", "optionInt1":12, "optionInt2":2, "optionInt3":19, "optionInt4":0, "optionStr1":"", "optionStr2":"0^1^2^3"},
